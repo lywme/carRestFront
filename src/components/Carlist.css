@@ -1,0 +1,17 @@
+.carTable{
+    border:1px solid black;
+    border-collapse: collapse;
+    line-height: 25px;
+    width:600px;
+    padding:3px 3px 2px 7px;
+    margin: 10px 0px 0px 10px;
+    text-align: center;
+}
+
+thead{
+    background-color: lightblue;
+}
+
+tr td{
+    border:1px solid black;
+}
