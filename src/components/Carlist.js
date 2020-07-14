@@ -13,7 +13,7 @@ class Carlist extends Component
         this.fetchcar();
     }
 
-    fetchcar()
+    fetchcar=()=>
     {
         fetch('http://127.0.0.1:8080/api/cars')
         .then((response)=>response.json())
@@ -25,9 +25,11 @@ class Carlist extends Component
         .catch(err=>console.Console.error(err));
     }
 
-    delcar(delId)
+    delcar=(link)=>
     {
-        console.log(delId);
+        fetch(link,{method:'DELETE'})
+        .then(res=>this.fetchcar())
+        .catch(err=>console.error(err))
     }
 
     render(){
