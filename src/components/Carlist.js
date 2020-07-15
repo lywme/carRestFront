@@ -1,5 +1,11 @@
 import React,{Component} from 'react';
 import './Carlist.css';
+import {ToastContainer,toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {confirmAlert} from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import {SERVER_URL} from '../Constant.js';
+import AddCar from './AddCar';
 
 class Carlist extends Component
 {
@@ -25,10 +31,38 @@ class Carlist extends Component
         .catch(err=>console.Console.error(err));
     }
 
+    addCar=(car)=>{
+        fetch(SERVER_URL+'/api/cars',{
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify(car)
+        })
+        .then(res=>this.fetchcar())
+        .catch(err=>console.error(err))
+    }
+
+    confirmDelete=(link)=>{
+        confirmAlert({
+            message:'Are you sure to delete?',
+            buttons:[
+                {
+                    label:'Yes',
+                    onClick:()=>this.delcar(link)
+                },
+                {
+                    label:'No',
+                }
+            ]
+        })
+    }
+
     delcar=(link)=>
     {
         fetch(link,{method:'DELETE'})
-        .then(res=>this.fetchcar())
+        .then(res=>{
+            toast.success("Car deleted",{position:toast.POSITION.BOTTOM_LEFT});
+            this.fetchcar();
+        })
         .catch(err=>console.error(err))
     }
 
@@ -40,14 +74,16 @@ class Carlist extends Component
                 <td>{item.color}</td>
                 <td>{item.year}</td>
                 <td>{item.price}</td>
-                <td><button onClick={()=>this.delcar(item._links.self.href)}>delete</button></td>
+                <td><button onClick={()=>this.confirmDelete(item._links.self.href)}>delete</button></td>
             </tr>
         );
         return (<div>
+            <AddCar addCar={this.addCar} fetchCar={this.fetchcar} />
             <table className="carTable">
             <thead><tr><th>Brand</th><th>Model</th><th>Color</th><th>Year</th><th>Price</th><th></th></tr></thead>
             <tbody>{tableRows}</tbody>
             </table>
+            <ToastContainer autoClose={1500} />
         </div>);
     }
 }

@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import './App.css';
-import Carlist from './components/Carlist'
+import Carlist from './components/Carlist';
+
 
 class App extends Component {
 
@@ -11,6 +12,7 @@ class App extends Component {
       <header className="App-header">
         <h1 className="App-title">CarList</h1>
       </header>
+      
       <Carlist />
     </div>
     );
