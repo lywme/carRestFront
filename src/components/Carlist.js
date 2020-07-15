@@ -6,6 +6,7 @@ import {confirmAlert} from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import {SERVER_URL} from '../Constant.js';
 import AddCar from './AddCar';
+import UpdateCar from './UpdateCar';
 
 class Carlist extends Component
 {
@@ -41,6 +42,16 @@ class Carlist extends Component
         .catch(err=>console.error(err))
     }
 
+    updateCar=(car,linkurl)=>{
+        fetch(linkurl,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(car)})
+        .then(
+            res=>{
+                toast.success("Changes saved",{position:toast.POSITION.BOTTOM_LEFT});
+                this.fetchcar();
+        }
+    )
+    }  
+
     confirmDelete=(link)=>{
         confirmAlert({
             message:'Are you sure to delete?',
@@ -66,6 +77,12 @@ class Carlist extends Component
         .catch(err=>console.error(err))
     }
 
+    edit=(index)=>{
+        //console.log(index);
+        //显示Update的输入框
+        this.updateform.show();
+    }
+
     render(){
         const tableRows=this.state.cars.map((item,index)=>
             <tr key={index}>
@@ -74,13 +91,15 @@ class Carlist extends Component
                 <td>{item.color}</td>
                 <td>{item.year}</td>
                 <td>{item.price}</td>
+                <td><UpdateCar linkurl={item._links.self.href} updateCar={this.updateCar}/></td>
                 <td><button onClick={()=>this.confirmDelete(item._links.self.href)}>delete</button></td>
             </tr>
         );
         return (<div>
             <AddCar addCar={this.addCar} fetchCar={this.fetchcar} />
+            
             <table className="carTable">
-            <thead><tr><th>Brand</th><th>Model</th><th>Color</th><th>Year</th><th>Price</th><th></th></tr></thead>
+            <thead><tr><th>Brand</th><th>Model</th><th>Color</th><th>Year</th><th>Price</th><th></th><th></th></tr></thead>
             <tbody>{tableRows}</tbody>
             </table>
             <ToastContainer autoClose={1500} />
