@@ -7,6 +7,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import {SERVER_URL} from '../Constant.js';
 import AddCar from './AddCar';
 import UpdateCar from './UpdateCar';
+import {CSVLink} from 'react-csv';
 
 class Carlist extends Component
 {
@@ -97,7 +98,7 @@ class Carlist extends Component
         );
         return (<div>
             <AddCar addCar={this.addCar} fetchCar={this.fetchcar} />
-            
+            <CSVLink data={this.state.cars}>Export to CSV</CSVLink>
             <table className="carTable">
             <thead><tr><th>Brand</th><th>Model</th><th>Color</th><th>Year</th><th>Price</th><th></th><th></th></tr></thead>
             <tbody>{tableRows}</tbody>
