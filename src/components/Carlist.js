@@ -8,6 +8,8 @@ import {SERVER_URL} from '../Constant.js';
 import AddCar from './AddCar';
 import UpdateCar from './UpdateCar';
 import {CSVLink} from 'react-csv';
+import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 class Carlist extends Component
 {
@@ -93,12 +95,18 @@ class Carlist extends Component
                 <td>{item.year}</td>
                 <td>{item.price}</td>
                 <td><UpdateCar linkurl={item._links.self.href} updateCar={this.updateCar}/></td>
-                <td><button onClick={()=>this.confirmDelete(item._links.self.href)}>delete</button></td>
+                <td><Button size="small" variant="text" color="secondary" onClick={()=>this.confirmDelete(item._links.self.href)}>delete</Button></td>
             </tr>
         );
         return (<div>
-            <AddCar addCar={this.addCar} fetchCar={this.fetchcar} />
-            <CSVLink data={this.state.cars}>Export to CSV</CSVLink>
+            <Grid container>
+                <Grid item>
+                    <AddCar addCar={this.addCar} fetchCar={this.fetchcar} />
+                </Grid>
+                <Grid item style={{padding:20}}>
+                    <CSVLink data={this.state.cars}>Export to CSV</CSVLink>
+                </Grid>
+            </Grid>
             <table className="carTable">
             <thead><tr><th>Brand</th><th>Model</th><th>Color</th><th>Year</th><th>Price</th><th></th><th></th></tr></thead>
             <tbody>{tableRows}</tbody>

@@ -1,6 +1,8 @@
 import React,{Component} from 'react';
 import SkyLight from 'react-skylight';
 import { toast } from 'react-toastify';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
 class UpdateCar extends Component{
     constructor(props)
@@ -60,16 +62,17 @@ class UpdateCar extends Component{
     render(){
         return (
             <div>
-                <button onClick={()=>this.showUp()}>edit</button>
-                <SkyLight hideOnOverlayClicked ref={ref=>this.updateform=ref} title="Update car">
+                <Button size="small" variant="text" color="primary" onClick={()=>this.showUp()}>edit</Button>
+                <SkyLight hideOnOverlayClicked ref={ref=>this.updateform=ref}>
                     <form>
-                    <input type="text" name="brand" value={this.state.brand} onChange={this.handleChange} placeholder="Brand" /><br/>
-                    <input type="text" name="model" value={this.state.model} onChange={this.handleChange} placeholder="Model" /><br/>
-                    <input type="text" name="color" value={this.state.color} onChange={this.handleChange} placeholder="Color" /><br/>
-                    <input type="text" name="year" value={this.state.year} onChange={this.handleChange} placeholder="Year" /><br/>
-                    <input type="text" name="price" value={this.state.price} onChange={this.handleChange} placeholder="Price" /><br/>
-                    <button onClick={this.handleSubmit}>Save</button>
-                    <button onClick={this.cancelSubmit}>Cancel</button>
+                    <h3>Update a car:</h3>
+                    <TextField type="text" name="brand" value={this.state.brand} onChange={this.handleChange} placeholder="Brand" /><br/>
+                    <TextField type="text" name="model" value={this.state.model} onChange={this.handleChange} placeholder="Model" /><br/>
+                    <TextField type="text" name="color" value={this.state.color} onChange={this.handleChange} placeholder="Color" /><br/>
+                    <TextField type="text" name="year" value={this.state.year} onChange={this.handleChange} placeholder="Year" /><br/>
+                    <TextField type="text" name="price" value={this.state.price} onChange={this.handleChange} placeholder="Price" /><br/>
+                    <Button variant="outlined" style={{margin:'10px'}} color="primary" onClick={this.handleSubmit}>Update</Button>
+                    <Button variant="outlined" color="secondary" onClick={this.cancelSubmit}>Cancel</Button>
                     </form>
                 </SkyLight>
             </div>
